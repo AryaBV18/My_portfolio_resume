@@ -354,9 +354,10 @@ export default function App() {
 }
 
 // --- CONTACT FORM COMPONENT ---
+// --- CONTACT FORM COMPONENT ---
 function ContactForm() {
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
-  const [status, setStatus] = useState('idle'); // idle, submitting, success, error
+  const [status, setStatus] = useState('idle');
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -366,30 +367,94 @@ function ContactForm() {
     e.preventDefault();
     setStatus('submitting');
 
-    // --- EMAILJS INTEGRATION INSTRUCTIONS ---
-    // 1. Install emailjs: `npm install @emailjs/browser`
-    // 2. Import it: `import emailjs from '@emailjs/browser';`
-    // 3. Replace this setTimeout with the real code below:
-   
-      emailjs.send(
-        'service_jk4d4rm', 
-        'template_ap2o6nh', 
-        {
-          from_name: formData.name,
-          reply_to: formData.email,
-          message: formData.message,
-        }, 
-        'EK-EAvNesrYv_MKI5'
-      )
-      .then((response) => {
+    // Using EmailJS REST API directly - no imports required!
+    const payload = {
+      service_id: 'service_jk4d4rm',
+      template_id: 'template_ap2o6nh',
+      user_id: 'EK-EAvNesrYv_MKI5',
+      template_params: {
+        name: formData.name,       
+        email: formData.email,     
+        message: formData.message, 
+      }
+    };
+
+    fetch('https://api.emailjs.com/api/v1.0/email/send', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload),
+    })
+    .then((response) => {
+      if (response.ok) {
         setStatus('success');
         setFormData({ name: '', email: '', message: '' });
-      })
-      .catch((err) => {
-        setStatus('error');
-      });
-   
+        setTimeout(() => setStatus('idle'), 5000);
+      } else {
+        throw new Error('Network response was not ok');
+      }
+    })
+    .catch((err) => {
+      console.error('FAILED...', err);
+      setStatus('error');
+      setTimeout(() => setStatus('idle'), 5000);
+    });
+  };
 
+  return (
+    <form onSubmit={handleSubmit} className="bg-slate-900 p-8 rounded-xl border border-slate-700 shadow-2xl text-left">
+      <div className="mb-6">
+        <label htmlFor="name" className="block text-slate-300 text-sm font-medium mb-2">Name</label>
+        <input 
+          type="text" id="name" name="name" required
+          value={formData.name} onChange={handleChange}
+          className="w-full bg-slate-800 border border-slate-600 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-teal-500 focus:ring-1 focus:ring-teal-500 transition-colors"
+          placeholder="John Doe"
+        />
+      </div>
+      
+      <div className="mb-6">
+        <label htmlFor="email" className="block text-slate-300 text-sm font-medium mb-2">Email Address</label>
+        <input 
+          type="email" id="email" name="email" required
+          value={formData.email} onChange={handleChange}
+          className="w-full bg-slate-800 border border-slate-600 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-teal-500 focus:ring-1 focus:ring-teal-500 transition-colors"
+          placeholder="john@example.com"
+        />
+      </div>
+
+      <div className="mb-8">
+        <label htmlFor="message" className="block text-slate-300 text-sm font-medium mb-2">Message</label>
+        <textarea 
+          id="message" name="message" required rows="5"
+          value={formData.message} onChange={handleChange}
+          className="w-full bg-slate-800 border border-slate-600 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-teal-500 focus:ring-1 focus:ring-teal-500 transition-colors resize-none"
+          placeholder="Hello Arya, I'd like to talk about..."
+        ></textarea>
+      </div>
+
+      <button 
+        type="submit" disabled={status === 'submitting'}
+        className="w-full py-4 bg-teal-500 hover:bg-teal-400 text-slate-900 font-bold rounded-lg transition-colors flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
+      >
+        {status === 'submitting' ? 'Sending...' : 'Send Message'}
+      </button>
+
+      {status === 'success' && (
+        <div className="mt-6 p-4 bg-teal-500/20 border border-teal-500/50 rounded-lg text-teal-400 text-center text-sm">
+          Message sent successfully! Acknowledgment email triggered. I'll get back to you soon.
+        </div>
+      )}
+      
+      {status === 'error' && (
+        <div className="mt-6 p-4 bg-red-500/20 border border-red-500/50 rounded-lg text-red-400 text-center text-sm">
+          Oops! Something went wrong. Please try again later.
+        </div>
+      )}
+    </form>
+  );
+}
     // Simulated network request for demonstration
     setTimeout(() => {
       setStatus('success');
