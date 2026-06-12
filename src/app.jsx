@@ -370,16 +370,16 @@ function ContactForm() {
     // 1. Install emailjs: `npm install @emailjs/browser`
     // 2. Import it: `import emailjs from '@emailjs/browser';`
     // 3. Replace this setTimeout with the real code below:
-    /*
+   
       emailjs.send(
-        'YOUR_SERVICE_ID', 
-        'YOUR_TEMPLATE_ID', 
+        'service_jk4d4rm', 
+        'template_ap2o6nh', 
         {
           from_name: formData.name,
           reply_to: formData.email,
           message: formData.message,
         }, 
-        'YOUR_PUBLIC_KEY'
+        'EK-EAvNesrYv_MKI5'
       )
       .then((response) => {
         setStatus('success');
@@ -388,7 +388,7 @@ function ContactForm() {
       .catch((err) => {
         setStatus('error');
       });
-    */
+   
 
     // Simulated network request for demonstration
     setTimeout(() => {
