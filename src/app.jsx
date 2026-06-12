@@ -18,7 +18,7 @@ const PORTFOLIO_DATA = {
   email: "aryabv0212@gmail.com",
   phone: "8050141198",
   linkedin: "https://linkedin.com/in/aryabv12",
-  github: "https://github.com", // Add your actual GitHub link here
+  github: "https://github.com/AryaBV18", // Add your actual GitHub link here
   objective: "To obtain a challenging position in a reputed organization where I can utilize my technical and problem-solving skills in Electronics and Communication Engineering, while contributing to the company's growth and gaining practical industry experience.",
   skills: [
     { category: "Programming", items: ["C", "C++"] },
