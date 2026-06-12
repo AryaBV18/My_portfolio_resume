@@ -18,7 +18,7 @@ const PORTFOLIO_DATA = {
   email: "aryabv0212@gmail.com",
   phone: "8050141198",
   linkedin: "https://linkedin.com/in/aryabv12",
-  github: "https://github.com/AryaBV18", // Add your actual GitHub link here
+  github: "https://github.com/AryaBV18",
   objective: "To obtain a challenging position in a reputed organization where I can utilize my technical and problem-solving skills in Electronics and Communication Engineering, while contributing to the company's growth and gaining practical industry experience.",
   skills: [
     { category: "Programming", items: ["C", "C++"] },
@@ -121,8 +121,13 @@ export default function App() {
   const handleDownloadCV = () => {
     // In a real Vercel deployment, you would put Arya_resume.pdf in the /public folder
     // and use an actual <a href="/Arya_resume.pdf" download> tag.
-    // For this preview, we'll show a toast message.
-    showToast("CV Download triggered! (In production, this will download your PDF)");
+    const link = document.createElement('a');
+    link.href = '/Arya_resume.pdf';
+    link.download = 'Arya_resume.pdf';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    showToast("CV Download triggered!");
   };
 
   return (
@@ -218,7 +223,6 @@ export default function App() {
               </p>
             </div>
             <div className="relative group mx-auto md:mx-0 w-64 h-64 border-2 border-teal-500 rounded-lg translate-x-2 translate-y-2 hover:translate-x-0 hover:translate-y-0 transition-all duration-300">
-              {/* Placeholder for Profile Picture - user can replace the src later */}
               <div className="absolute inset-0 bg-slate-700 rounded-lg -translate-x-4 -translate-y-4 flex items-center justify-center overflow-hidden">
                 <Terminal size={64} className="text-slate-500 opacity-50" />
                 <span className="absolute bottom-4 text-xs text-slate-400">Place profile photo here</span>
@@ -354,7 +358,6 @@ export default function App() {
 }
 
 // --- CONTACT FORM COMPONENT ---
-// --- CONTACT FORM COMPONENT ---
 function ContactForm() {
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
   const [status, setStatus] = useState('idle');
@@ -436,82 +439,6 @@ function ContactForm() {
 
       <button 
         type="submit" disabled={status === 'submitting'}
-        className="w-full py-4 bg-teal-500 hover:bg-teal-400 text-slate-900 font-bold rounded-lg transition-colors flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
-      >
-        {status === 'submitting' ? 'Sending...' : 'Send Message'}
-      </button>
-
-      {status === 'success' && (
-        <div className="mt-6 p-4 bg-teal-500/20 border border-teal-500/50 rounded-lg text-teal-400 text-center text-sm">
-          Message sent successfully! Acknowledgment email triggered. I'll get back to you soon.
-        </div>
-      )}
-      
-      {status === 'error' && (
-        <div className="mt-6 p-4 bg-red-500/20 border border-red-500/50 rounded-lg text-red-400 text-center text-sm">
-          Oops! Something went wrong. Please try again later.
-        </div>
-      )}
-    </form>
-  );
-}
-    // Simulated network request for demonstration
-    setTimeout(() => {
-      setStatus('success');
-      setFormData({ name: '', email: '', message: '' });
-      
-      // Reset success message after 5 seconds
-      setTimeout(() => setStatus('idle'), 5000);
-    }, 1500);
-  };
-
-  return (
-    <form onSubmit={handleSubmit} className="bg-slate-900 p-8 rounded-xl border border-slate-700 shadow-2xl text-left">
-      <div className="mb-6">
-        <label htmlFor="name" className="block text-slate-300 text-sm font-medium mb-2">Name</label>
-        <input 
-          type="text" 
-          id="name" 
-          name="name" 
-          required
-          value={formData.name}
-          onChange={handleChange}
-          className="w-full bg-slate-800 border border-slate-600 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-teal-500 focus:ring-1 focus:ring-teal-500 transition-colors"
-          placeholder="John Doe"
-        />
-      </div>
-      
-      <div className="mb-6">
-        <label htmlFor="email" className="block text-slate-300 text-sm font-medium mb-2">Email Address</label>
-        <input 
-          type="email" 
-          id="email" 
-          name="email" 
-          required
-          value={formData.email}
-          onChange={handleChange}
-          className="w-full bg-slate-800 border border-slate-600 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-teal-500 focus:ring-1 focus:ring-teal-500 transition-colors"
-          placeholder="john@example.com"
-        />
-      </div>
-
-      <div className="mb-8">
-        <label htmlFor="message" className="block text-slate-300 text-sm font-medium mb-2">Message</label>
-        <textarea 
-          id="message" 
-          name="message" 
-          required
-          rows="5"
-          value={formData.message}
-          onChange={handleChange}
-          className="w-full bg-slate-800 border border-slate-600 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-teal-500 focus:ring-1 focus:ring-teal-500 transition-colors resize-none"
-          placeholder="Hello Arya, I'd like to talk about..."
-        ></textarea>
-      </div>
-
-      <button 
-        type="submit" 
-        disabled={status === 'submitting'}
         className="w-full py-4 bg-teal-500 hover:bg-teal-400 text-slate-900 font-bold rounded-lg transition-colors flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
       >
         {status === 'submitting' ? 'Sending...' : (
