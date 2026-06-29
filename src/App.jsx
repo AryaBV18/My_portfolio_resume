@@ -144,7 +144,7 @@ export default function App() {
       <nav className={`fixed w-full z-40 transition-all duration-300 ${isScrolled ? 'bg-slate-900/90 backdrop-blur-md shadow-lg py-4' : 'bg-transparent py-6'}`}>
         <div className="container mx-auto px-6 md:px-12 flex justify-between items-center">
           <div className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-blue-500 cursor-pointer" onClick={() => scrollTo('home')}>
-            ABV.
+            A.
           </div>
           <div className="hidden md:flex space-x-8 text-sm font-medium">
             {['About', 'Skills', 'Education', 'Projects', 'Contact'].map((item) => (
