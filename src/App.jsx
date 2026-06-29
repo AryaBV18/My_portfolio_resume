@@ -225,7 +225,7 @@ export default function App() {
             <div className="relative group mx-auto md:mx-0 w-64 h-64 border-2 border-teal-500 rounded-lg translate-x-2 translate-y-2 hover:translate-x-0 hover:translate-y-0 transition-all duration-300">
               <div className="absolute inset-0 bg-slate-700 rounded-lg -translate-x-4 -translate-y-4 flex items-center justify-center overflow-hidden">
                 <Terminal size={64} className="text-slate-500 opacity-50" />
-                <span className="absolute bottom-4 text-xs text-slate-400">profile_photo.jpg</span>
+                <span className="absolute bottom-4 text-xs text-slate-400">profile_photo.png</span>
               </div>
             </div>
           </div>
